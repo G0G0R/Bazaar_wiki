@@ -9,7 +9,6 @@ import java.io.IOException;
 public class ApplicationLauncher {
 
     private ApplicationLauncher() {
-
     }
 
     static void main(String[] args) throws IOException, InterruptedException {
