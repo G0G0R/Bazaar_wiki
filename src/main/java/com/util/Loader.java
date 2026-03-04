@@ -1,4 +1,4 @@
-package com.main.util;
+package com.util;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
