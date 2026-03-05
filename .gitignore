@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Data JSON brut ###
-bazaar.json
+cards.json
