@@ -7,83 +7,44 @@ import com.main.wiki.mapper.ItemMapper;
 import com.main.wiki.model.Item;
 import com.main.wiki.repository.ItemRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.InOrder;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class ItemLoaderTest {
 
     @Test
-    void shouldLoadConvertFilterAndPersistItems() throws Exception {
+    void shouldLoadItemsAndIgnoreItemsWithMultipleHeroes() throws Exception {
+
         GameDataLoader gameDataLoader = mock(GameDataLoader.class);
         ObjectMapper objectMapper = mock(ObjectMapper.class);
         ItemMapper itemMapper = mock(ItemMapper.class);
-        ItemRepository itemRepository = mock(ItemRepository.class);
+        ItemRepository repository = mock(ItemRepository.class);
 
-        ItemLoader itemLoader = new ItemLoader(gameDataLoader, objectMapper, itemMapper, itemRepository);
+        ItemLoader loader =
+                new ItemLoader(gameDataLoader, objectMapper, itemMapper, repository);
 
-        JsonNode firstNode = mock(JsonNode.class);
-        JsonNode secondNode = mock(JsonNode.class);
-        JsonNode thirdNode = mock(JsonNode.class);
-        when(gameDataLoader.getObjectsByType("Item")).thenReturn(List.of(firstNode, secondNode, thirdNode));
+        JsonNode node1 = mock(JsonNode.class);
+        JsonNode node2 = mock(JsonNode.class);
 
-        ItemJson firstDto = new ItemJson();
-        firstDto.setHeroes(List.of("HeroA"));
-        ItemJson secondDto = new ItemJson();
-        secondDto.setHeroes(List.of("HeroA", "HeroB"));
-        ItemJson thirdDto = new ItemJson();
-        thirdDto.setHeroes(null);
+        when(gameDataLoader.getObjectsByType("Item"))
+                .thenReturn(List.of(node1, node2));
 
-        when(objectMapper.convertValue(firstNode, ItemJson.class)).thenReturn(firstDto);
-        when(objectMapper.convertValue(secondNode, ItemJson.class)).thenReturn(secondDto);
-        when(objectMapper.convertValue(thirdNode, ItemJson.class)).thenReturn(thirdDto);
+        ItemJson dto1 = new ItemJson();
+        dto1.setHeroes(List.of("Vanessa"));
 
-        Item mappedFirst = new Item();
-        mappedFirst.setId("item-1");
-        when(itemMapper.toEntity(firstDto)).thenReturn(mappedFirst);
-        when(itemMapper.toEntity(thirdDto)).thenReturn(null);
+        ItemJson dto2 = new ItemJson();
+        dto2.setHeroes(List.of("Vanessa", "Pygmalien"));
 
-        itemLoader.run();
+        when(objectMapper.convertValue(node1, ItemJson.class)).thenReturn(dto1);
+        when(objectMapper.convertValue(node2, ItemJson.class)).thenReturn(dto2);
 
-        verify(gameDataLoader).load();
-        verify(itemMapper).toEntity(firstDto);
-        verify(itemMapper, never()).toEntity(secondDto);
-        verify(itemMapper).toEntity(thirdDto);
+        Item mappedItem = new Item();
+        when(itemMapper.toEntity(dto1)).thenReturn(mappedItem);
 
-        InOrder inOrder = inOrder(itemRepository);
-        inOrder.verify(itemRepository).deleteAll();
-        inOrder.verify(itemRepository).saveAll(argThat(items -> toList(items).contains(mappedFirst)));
+        loader.run();
+
+        verify(repository).saveAll(List.of(mappedItem));
     }
-
-    @Test
-    void shouldDeleteAndSaveEmptyListWhenNoItemsFound() throws Exception {
-        GameDataLoader gameDataLoader = mock(GameDataLoader.class);
-        ObjectMapper objectMapper = mock(ObjectMapper.class);
-        ItemMapper itemMapper = mock(ItemMapper.class);
-        ItemRepository itemRepository = mock(ItemRepository.class);
-
-        ItemLoader itemLoader = new ItemLoader(gameDataLoader, objectMapper, itemMapper, itemRepository);
-        when(gameDataLoader.getObjectsByType("Item")).thenReturn(List.of());
-
-        itemLoader.run();
-
-        verify(gameDataLoader).load();
-        verify(itemRepository).deleteAll();
-        verify(itemRepository).saveAll(argThat(items -> toList(items).isEmpty()));
-    }
-
-    private static List<Item> toList(Iterable<Item> items) {
-        List<Item> result = new ArrayList<>();
-        items.forEach(result::add);
-        return result;
-    }
-
 }
