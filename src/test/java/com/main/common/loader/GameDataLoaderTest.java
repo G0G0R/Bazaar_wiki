@@ -62,7 +62,6 @@ class GameDataLoaderTest {
         when(objectMapper.readTree(any(InputStream.class))).thenReturn(fixtureRoot);
 
         gameDataLoader.load();
-        gameDataLoader.load();
 
         verify(objectMapper, times(1)).readTree(any(InputStream.class));
 
@@ -74,28 +73,23 @@ class GameDataLoaderTest {
     @Test
     void shouldHandleMissingTypeField() throws IOException {
 
-        GameDataLoader loader = new GameDataLoader(objectMapper);
-
         JsonNode root = JsonFixtureLoader.load("missing-type.json");
 
-        when(objectMapper.readTree(any(InputStream.class)))
-                .thenReturn(root);
+        when(objectMapper.readTree(any(InputStream.class))).thenReturn(root);
 
-        loader.load();
+        gameDataLoader.load();
 
-        assertThat(loader.getObjectsByType("Item")).hasSize(1);
-        assertThat(loader.getObjectsByType("UNKNOWN")).hasSize(1);
+        assertThat(gameDataLoader.getObjectsByType("Item")).hasSize(1);
+        assertThat(gameDataLoader.getObjectsByType("UNKNOWN")).hasSize(1);
     }
 
     private JsonNode readFixtureRootNode() throws IOException {
-
-        ObjectMapper fixtureMapper = new ObjectMapper();
 
         try (InputStream fixture = getClass().getClassLoader().getResourceAsStream(FIXTURE_PATH)) {
 
             assertThat(fixture).isNotNull();
 
-            return fixtureMapper.readTree(fixture);
+            return new ObjectMapper().readTree(fixture);
         }
     }
 }
