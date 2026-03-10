@@ -1,14 +1,13 @@
 package com.main.wiki.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class LocalizationJson {
 
-    public TitleJson Title;
-
-    public TitleJson getTitle() {
-        return Title;
-    }
-
-    public void setTitle(TitleJson title) {
-        Title = title;
-    }
+    @JsonProperty("Title")
+    private TitleJson title;
 }

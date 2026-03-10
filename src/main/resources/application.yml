@@ -3,10 +3,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/mydb
     username: myuser
     password: mypassword
+
   jpa:
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false

@@ -1,79 +1,58 @@
 package com.main.common.loader;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.main.common.util.Constants;
-import com.main.common.util.Tier;
-import com.main.wiki.dto.ItemJson;
-import com.main.wiki.model.Item;
-import com.main.wiki.repository.ItemRepository;
-import org.jspecify.annotations.NonNull;
-import org.springframework.boot.CommandLineRunner;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
-public class GameDataLoader implements CommandLineRunner {
+@RequiredArgsConstructor
+public class GameDataLoader {
 
-    private final ItemRepository itemRepository;
-    private final ObjectMapper mapper;
+    private static final Logger log = LoggerFactory.getLogger(GameDataLoader.class);
 
-    public GameDataLoader(ItemRepository itemRepository, ObjectMapper mapper) {
-        this.itemRepository = itemRepository;
-        this.mapper = mapper;
-    }
+    private final ObjectMapper objectMapper;
 
-    @Override
-    public void run(String @NonNull  ... args) throws Exception {
-        loadItems();
-    }
+    @Getter
+    private final Map<String, List<JsonNode>> objectsByType = new HashMap<>();
 
-    private void loadItems() throws Exception {
+    public void load() throws IOException {
 
-        itemRepository.deleteAllInBatch();
-
-        InputStream is = new ClassPathResource(Constants.BAZAAR_JSON).getInputStream();
-
-        JsonNode root = mapper.readTree(is);
-
-        // récupérer la version (ex: "5.0.0")
-        JsonNode cardsNode = root.elements().next();
-
-        ItemJson[] itemsJson = mapper.treeToValue(cardsNode, ItemJson[].class);
-
-        List<Item> items = new ArrayList<>();
-
-        for (ItemJson json : itemsJson) {
-
-            String name = null;
-
-            if (json.getLocalization() != null
-                    && json.getLocalization().getTitle() != null) {
-
-                name = json.getLocalization().getTitle().getText();
-            }
-
-            Tier tier = null;
-
-            if (json.getStartingTier() != null) {
-                tier = Tier.valueOf(json.getStartingTier().toUpperCase());
-            }
-
-            Item item = new Item(
-                    json.getId(),
-                    name,
-                    tier
-            );
-
-            items.add(item);
+        if (!objectsByType.isEmpty()) {
+            return;
         }
 
-        itemRepository.saveAll(items);
+        InputStream is = new ClassPathResource("static/cards.json").getInputStream();
 
-        System.out.println("Items loaded: " + items.size());
+        JsonNode root = objectMapper.readTree(is);
+
+        for (JsonNode versionNode : root) {
+
+            for (JsonNode cardNode : versionNode) {
+
+                String type = cardNode.path("Type").asText("UNKNOWN");
+
+                objectsByType
+                        .computeIfAbsent(type, k -> new ArrayList<>())
+                        .add(cardNode);
+            }
+        }
+
+        objectsByType.forEach((type, list) ->
+                log.info("Loaded {} objects of type {}", list.size(), type)
+        );
+    }
+
+    public List<JsonNode> getObjectsByType(String type) {
+        return objectsByType.getOrDefault(type, Collections.emptyList());
     }
 }

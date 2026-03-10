@@ -5,5 +5,18 @@ public enum Tier {
     SILVER,
     GOLD,
     DIAMOND,
-    LEGENDARY
+    LEGENDARY;
+
+    public static Tier fromValue(String value) {
+        if (value == null) {
+            return null;
+        }
+
+        try {
+            return Tier.valueOf(value.toUpperCase());
+        } catch (IllegalArgumentException _) {
+            throw new IllegalArgumentException("Unknown tier value: " + value);
+        }
+    }
+
 }
