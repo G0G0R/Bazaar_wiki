@@ -1,13 +1,9 @@
 package com.main.wiki.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
 public class ItemJson {
 
     @JsonProperty("Id")
@@ -22,5 +18,54 @@ public class ItemJson {
     private List<String> heroes;
 
     private List<String> tags;
+
     private List<String> hiddenTags;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getStartingTier() {
+        return startingTier;
+    }
+
+    public void setStartingTier(String startingTier) {
+        this.startingTier = startingTier;
+    }
+
+    public LocalizationJson getLocalization() {
+        return localization;
+    }
+
+    public void setLocalization(LocalizationJson localization) {
+        this.localization = localization;
+    }
+
+    public List<String> getHeroes() {
+        return heroes;
+    }
+
+    public void setHeroes(List<String> heroes) {
+        this.heroes = heroes;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public List<String> getHiddenTags() {
+        return hiddenTags;
+    }
+
+    public void setHiddenTags(List<String> hiddenTags) {
+        this.hiddenTags = hiddenTags;
+    }
 }

@@ -6,7 +6,7 @@ import com.main.wiki.dto.ItemJson;
 import com.main.wiki.mapper.ItemMapper;
 import com.main.wiki.model.Item;
 import com.main.wiki.repository.ItemRepository;
-import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NonNull;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@RequiredArgsConstructor
 public class ItemLoader implements CommandLineRunner {
 
     private final GameDataLoader gameDataLoader;
@@ -22,8 +21,15 @@ public class ItemLoader implements CommandLineRunner {
     private final ItemMapper itemMapper;
     private final ItemRepository itemRepository;
 
+    public ItemLoader(GameDataLoader gameDataLoader, ObjectMapper objectMapper, ItemMapper itemMapper, ItemRepository itemRepository) {
+        this.gameDataLoader = gameDataLoader;
+        this.objectMapper = objectMapper;
+        this.itemMapper = itemMapper;
+        this.itemRepository = itemRepository;
+    }
+
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String @NonNull ... args) throws Exception {
 
         gameDataLoader.load();
 
@@ -49,5 +55,21 @@ public class ItemLoader implements CommandLineRunner {
 
         itemRepository.deleteAll();
         itemRepository.saveAll(items);
+    }
+
+    public GameDataLoader getGameDataLoader() {
+        return gameDataLoader;
+    }
+
+    public ObjectMapper getObjectMapper() {
+        return objectMapper;
+    }
+
+    public ItemMapper getItemMapper() {
+        return itemMapper;
+    }
+
+    public ItemRepository getItemRepository() {
+        return itemRepository;
     }
 }

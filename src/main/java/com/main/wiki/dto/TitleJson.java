@@ -1,13 +1,18 @@
 package com.main.wiki.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class TitleJson {
 
     @JsonProperty("Text")
     private String text;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
 }

@@ -7,8 +7,6 @@ import java.io.InputStream;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.main.common.util.Constants;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -16,15 +14,17 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-@RequiredArgsConstructor
 public class GameDataLoader {
 
     private static final Logger log = LoggerFactory.getLogger(GameDataLoader.class);
 
     private final ObjectMapper objectMapper;
 
-    @Getter
     private final Map<String, List<JsonNode>> objectsByType = new HashMap<>();
+
+    public GameDataLoader(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     public void load() throws IOException {
 
