@@ -43,7 +43,7 @@ public class GameDataLoader {
                 String type = cardNode.path("Type").asText("UNKNOWN");
 
                 objectsByType
-                        .computeIfAbsent(type, k -> new ArrayList<>())
+                        .computeIfAbsent(type, _ -> new ArrayList<>())
                         .add(cardNode);
             }
         }
