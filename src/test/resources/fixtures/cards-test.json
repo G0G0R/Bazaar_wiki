@@ -1,0 +1,21 @@
+[
+  [
+    {
+      "Type": "Item",
+      "Id": "item-1"
+    },
+    {
+      "Type": "Hero",
+      "Id": "hero-1"
+    }
+  ],
+  [
+    {
+      "Type": "Item",
+      "Id": "item-2"
+    },
+    {
+      "Id": "unknown-1"
+    }
+  ]
+]

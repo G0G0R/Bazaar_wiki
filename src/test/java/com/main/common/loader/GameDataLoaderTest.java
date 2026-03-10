@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 
 class GameDataLoaderTest {
 
-    private static final String FIXTURE_PATH = "/static/cards.json";
+    private static final String FIXTURE_PATH = "fixtures/cards-test.json";
 
     private ObjectMapper objectMapper;
     private GameDataLoader gameDataLoader;
@@ -91,8 +91,7 @@ class GameDataLoaderTest {
 
         ObjectMapper fixtureMapper = new ObjectMapper();
 
-        try (InputStream fixture =
-                     getClass().getResourceAsStream(FIXTURE_PATH)) {
+        try (InputStream fixture = getClass().getClassLoader().getResourceAsStream(FIXTURE_PATH)) {
 
             assertThat(fixture).isNotNull();
 
