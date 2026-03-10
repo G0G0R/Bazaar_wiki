@@ -1,11 +1,12 @@
 package com.main.common.loader;
 
+import java.util.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.main.common.util.Constants;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -31,7 +32,7 @@ public class GameDataLoader {
             return;
         }
 
-        InputStream is = new ClassPathResource("static/cards.json").getInputStream();
+        InputStream is = new ClassPathResource(Constants.BAZAAR_JSON).getInputStream();
 
         JsonNode root = objectMapper.readTree(is);
 

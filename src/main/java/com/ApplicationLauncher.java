@@ -3,15 +3,13 @@ package com;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.IOException;
-
 @SpringBootApplication
 public class ApplicationLauncher {
 
     private ApplicationLauncher() {
     }
 
-    static void main(String[] args) throws IOException, InterruptedException {
+    static void main(String[] args) {
         SpringApplication.run(ApplicationLauncher.class, args);
     }
 
