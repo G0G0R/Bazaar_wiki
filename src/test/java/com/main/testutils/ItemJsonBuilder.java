@@ -1,8 +1,8 @@
 package com.main.testutils;
 
-import com.main.wiki.dto.ItemJson;
-import com.main.wiki.dto.LocalizationJson;
-import com.main.wiki.dto.TitleJson;
+import com.main.wiki.item.dto.ItemJson;
+import com.main.wiki.item.dto.LocalizationJson;
+import com.main.wiki.item.dto.TitleJson;
 
 import java.util.List;
 

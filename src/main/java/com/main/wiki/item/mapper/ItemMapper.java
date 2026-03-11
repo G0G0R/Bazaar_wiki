@@ -1,8 +1,8 @@
-package com.main.wiki.mapper;
+package com.main.wiki.item.mapper;
 
 import com.main.common.util.Tier;
-import com.main.wiki.dto.ItemJson;
-import com.main.wiki.model.Item;
+import com.main.wiki.item.dto.ItemJson;
+import com.main.wiki.item.model.Item;
 import org.springframework.stereotype.Component;
 
 @Component

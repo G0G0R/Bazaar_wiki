@@ -2,8 +2,9 @@ package com.main.wiki.mapper;
 
 import com.main.common.util.Tier;
 import com.main.testutils.ItemJsonBuilder;
-import com.main.wiki.dto.ItemJson;
-import com.main.wiki.model.Item;
+import com.main.wiki.item.dto.ItemJson;
+import com.main.wiki.item.mapper.ItemMapper;
+import com.main.wiki.item.model.Item;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;

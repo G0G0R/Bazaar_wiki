@@ -1,10 +1,7 @@
-package com.main.wiki.model;
+package com.main.wiki.item.model;
 
+import jakarta.persistence.*;
 import com.main.common.util.Tier;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
 
 import java.util.List;
 
@@ -19,6 +16,9 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private Tier tier;
 
+    @ElementCollection
+    @CollectionTable(name = "item_heroes")
+    @Column(name = "hero")
     private List<String> heroes;
 
     private List<String> tags;

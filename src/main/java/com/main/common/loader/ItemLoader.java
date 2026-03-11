@@ -2,10 +2,10 @@ package com.main.common.loader;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.main.wiki.dto.ItemJson;
-import com.main.wiki.mapper.ItemMapper;
-import com.main.wiki.model.Item;
-import com.main.wiki.repository.ItemRepository;
+import com.main.wiki.item.dto.ItemJson;
+import com.main.wiki.item.mapper.ItemMapper;
+import com.main.wiki.item.model.Item;
+import com.main.wiki.item.repository.ItemRepository;
 import org.jspecify.annotations.NonNull;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

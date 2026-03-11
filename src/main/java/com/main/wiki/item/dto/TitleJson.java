@@ -1,4 +1,4 @@
-package com.main.wiki.dto;
+package com.main.wiki.item.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
