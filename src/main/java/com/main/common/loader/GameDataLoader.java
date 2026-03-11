@@ -9,7 +9,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.main.common.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 
@@ -21,9 +23,16 @@ public class GameDataLoader {
     private final ObjectMapper objectMapper;
 
     private final Map<String, List<JsonNode>> objectsByType = new HashMap<>();
+    private final Resource resource;
 
+    @Autowired
     public GameDataLoader(ObjectMapper objectMapper) {
+        this(objectMapper, new ClassPathResource(Constants.BAZAAR_JSON));
+    }
+
+    public GameDataLoader(ObjectMapper objectMapper, Resource resource) {
         this.objectMapper = objectMapper;
+        this.resource = resource;
     }
 
     public void load() throws IOException {
@@ -32,7 +41,7 @@ public class GameDataLoader {
             return;
         }
 
-        InputStream is = new ClassPathResource(Constants.BAZAAR_JSON).getInputStream();
+        InputStream is = resource.getInputStream();
 
         JsonNode root = objectMapper.readTree(is);
 

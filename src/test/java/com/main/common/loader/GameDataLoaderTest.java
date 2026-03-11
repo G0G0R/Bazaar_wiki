@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.main.testutils.JsonFixtureLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +24,7 @@ class GameDataLoaderTest {
     @BeforeEach
     void setUp() {
         objectMapper = mock(ObjectMapper.class);
-        gameDataLoader = new GameDataLoader(objectMapper);
+        gameDataLoader = new GameDataLoader(objectMapper, new ClassPathResource(FIXTURE_PATH));
     }
 
     @Test
