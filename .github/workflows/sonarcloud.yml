@@ -9,30 +9,52 @@ on:
 
 jobs:
   build:
-    name: Build and analyze on SonarCloud
+    name: Build backend and frontend
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout du repo
       - name: Checkout sources
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      # 2. Setup Java (backend)
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '25'
 
+      # 3. Cache Maven
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-m2-${{ hashFiles('backend/pom.xml') }}
 
-      - name: Build with Maven (tests + Jacoco report)
-        run: mvn clean test jacoco:report
+      # 4. Build backend
+      - name: Build backend (tests + JaCoCo)
+        working-directory: backend
+        run: mvn clean verify jacoco:report
 
+      # 5. Setup Node (frontend)
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 6. Install frontend deps
+      - name: Install frontend dependencies
+        working-directory: frontend/bazaar-frontend
+        run: npm install
+
+      # 7. Build Angular
+      - name: Build frontend
+        working-directory: frontend/bazaar-frontend
+        run: npm run build -- --configuration production
+
+      # 8. SonarCloud
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
         env:
