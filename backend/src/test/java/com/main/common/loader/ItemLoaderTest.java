@@ -28,7 +28,7 @@ class ItemLoaderTest {
         JsonNode node1 = mock(JsonNode.class);
         JsonNode node2 = mock(JsonNode.class);
 
-        when(gameDataLoader.getObjectsByType("Item"))
+        when(gameDataLoader.getObjectsByType("ItemService"))
                 .thenReturn(List.of(node1, node2));
 
         ItemJson dto1 = new ItemJson();

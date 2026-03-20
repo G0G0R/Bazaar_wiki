@@ -36,7 +36,7 @@ class GameDataLoaderTest {
 
         gameDataLoader.load();
 
-        assertThat(gameDataLoader.getObjectsByType("Item")).hasSize(2);
+        assertThat(gameDataLoader.getObjectsByType("ItemService")).hasSize(2);
         assertThat(gameDataLoader.getObjectsByType("Hero")).hasSize(1);
         assertThat(gameDataLoader.getObjectsByType("UNKNOWN")).hasSize(1);
     }
@@ -66,7 +66,7 @@ class GameDataLoaderTest {
 
         verify(objectMapper, times(1)).readTree(any(InputStream.class));
 
-        assertThat(gameDataLoader.getObjectsByType("Item")).hasSize(2);
+        assertThat(gameDataLoader.getObjectsByType("ItemService")).hasSize(2);
         assertThat(gameDataLoader.getObjectsByType("Hero")).hasSize(1);
         assertThat(gameDataLoader.getObjectsByType("UNKNOWN")).hasSize(1);
     }
@@ -80,7 +80,7 @@ class GameDataLoaderTest {
 
         gameDataLoader.load();
 
-        assertThat(gameDataLoader.getObjectsByType("Item")).hasSize(1);
+        assertThat(gameDataLoader.getObjectsByType("ItemService")).hasSize(1);
         assertThat(gameDataLoader.getObjectsByType("UNKNOWN")).hasSize(1);
     }
 

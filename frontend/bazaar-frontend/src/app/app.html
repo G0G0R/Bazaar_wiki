@@ -1,1 +1,17 @@
-<h1>Hello World 🚀</h1>
+<h1 class="title">Bazaar Wiki</h1>
+
+<div class="search-container">
+  <input
+    type="text"
+    placeholder="Rechercher un item..."
+    [(ngModel)]="searchTerm"
+  />
+</div>
+
+<div class="grid">
+  @for (item of filteredItems(); track item.id) {
+    <div class="card">
+      {{ item.name }}
+    </div>
+  }
+</div>

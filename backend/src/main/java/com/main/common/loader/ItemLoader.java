@@ -6,6 +6,7 @@ import com.main.wiki.item.dto.ItemJson;
 import com.main.wiki.item.mapper.ItemMapper;
 import com.main.wiki.item.model.Item;
 import com.main.wiki.item.repository.ItemRepository;
+import jakarta.transaction.Transactional;
 import org.jspecify.annotations.NonNull;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -28,6 +29,7 @@ public class ItemLoader implements CommandLineRunner {
         this.itemRepository = itemRepository;
     }
 
+    @Transactional
     @Override
     public void run(String @NonNull ... args) throws Exception {
 

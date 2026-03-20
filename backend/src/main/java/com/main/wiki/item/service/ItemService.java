@@ -31,7 +31,7 @@ public class ItemService {
         return itemRepository.findById(id)
                 .map(mapper::toDto)
                 .orElseThrow(() ->
-                        new RuntimeException("Item not found: " + id));
+                        new RuntimeException("ItemService not found: " + id));
     }
 
     public List<ItemResponseDto> getItemsByTier(Tier tier) {
