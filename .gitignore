@@ -5,6 +5,7 @@ backend/.mvn/wrapper/maven-wrapper.jar
 !**/src/test/**/target/
 frontend/**/node_modules/
 frontend/**/dist/
+.env
 
 ### STS ###
 .apt_generated

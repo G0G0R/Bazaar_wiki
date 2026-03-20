@@ -13,7 +13,7 @@ public class ApplicationLauncher {
     private ApplicationLauncher() {
     }
 
-    static void main(String[] args) {
+    public static void main(String[] args) {
         SpringApplication.run(ApplicationLauncher.class, args);
     }
 
