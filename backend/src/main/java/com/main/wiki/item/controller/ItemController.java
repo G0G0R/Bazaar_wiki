@@ -1,6 +1,7 @@
 package com.main.wiki.item.controller;
 
 import org.springframework.web.bind.annotation.*;
+
 import com.main.common.util.Tier;
 import com.main.wiki.item.dto.ItemResponseDto;
 import com.main.wiki.item.service.ItemService;
@@ -18,22 +19,15 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemResponseDto> getAllItems() {
-        return itemService.getAllItems();
+    public List<ItemResponseDto> getItems(
+            @RequestParam(required = false) Tier tier,
+            @RequestParam(required = false) String hero
+    ) {
+        return itemService.getItems(tier, hero);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ItemResponseDto getItemById(@PathVariable String id) {
         return itemService.getItemById(id);
-    }
-
-    @GetMapping("/tier/{tier}")
-    public List<ItemResponseDto> getItemsByTier(@PathVariable Tier tier) {
-        return itemService.getItemsByTier(tier);
-    }
-
-    @GetMapping("/hero/{hero}")
-    public List<ItemResponseDto> getItemsByHero(@PathVariable String hero) {
-        return itemService.getItemsByHero(hero);
     }
 }

@@ -1,16 +1,8 @@
-/* Reset simple */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
-
-/* Titre */
 .title {
   text-align: center;
   margin-top: 20px;
 }
 
-/* Barre de recherche */
 .search-container {
   display: flex;
   justify-content: center;
@@ -20,10 +12,8 @@ body {
 .search-container input {
   width: 300px;
   padding: 10px;
-  font-size: 16px;
 }
 
-/* Grid */
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -31,11 +21,9 @@ body {
   padding: 20px;
 }
 
-/* Cards */
 .card {
   border: 1px solid #ccc;
   padding: 20px;
   text-align: center;
   border-radius: 8px;
-  background: #f5f5f5;
 }

@@ -14,4 +14,6 @@ public interface ItemRepository extends JpaRepository<Item, String> {
     @Query("SELECT i FROM Item i WHERE :hero MEMBER OF i.heroes")
     List<Item> findByHero(String hero);
 
+    @Query("SELECT i FROM Item i WHERE i.tier = :tier AND :hero MEMBER OF i.heroes")
+    List<Item> findByTierAndHero(Tier tier, String hero);
 }

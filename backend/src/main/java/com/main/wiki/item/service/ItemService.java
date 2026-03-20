@@ -3,6 +3,7 @@ package com.main.wiki.item.service;
 import com.main.common.util.Tier;
 import com.main.wiki.item.dto.ItemResponseDto;
 import com.main.wiki.item.mapper.ItemResponseMapper;
+import com.main.wiki.item.model.Item;
 import com.main.wiki.item.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
@@ -34,16 +35,24 @@ public class ItemService {
                         new RuntimeException("ItemService not found: " + id));
     }
 
-    public List<ItemResponseDto> getItemsByTier(Tier tier) {
-        return itemRepository.findByTier(tier)
-                .stream()
-                .map(mapper::toDto)
-                .toList();
-    }
+    public List<ItemResponseDto> getItems(Tier tier, String hero) {
 
-    public List<ItemResponseDto> getItemsByHero(String hero) {
-        return itemRepository.findByHero(hero)
-                .stream()
+        List<Item> items;
+
+        if (tier != null && hero != null) {
+            items = itemRepository.findByTierAndHero(tier, hero);
+
+        } else if (tier != null) {
+            items = itemRepository.findByTier(tier);
+
+        } else if (hero != null) {
+            items = itemRepository.findByHero(hero);
+
+        } else {
+            items = itemRepository.findAll();
+        }
+
+        return items.stream()
                 .map(mapper::toDto)
                 .toList();
     }
