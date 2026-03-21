@@ -3,6 +3,7 @@ package com.main.wiki.item.dto;
 import com.main.common.util.Tier;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ItemResponseDto {
 
@@ -44,4 +45,16 @@ public class ItemResponseDto {
     public void setHeroes(List<String> heroes) { this.heroes = heroes; }
     public void setTags(List<String> tags) { this.tags = tags; }
     public void setHiddenTags(List<String> hiddenTags) { this.hiddenTags = hiddenTags; }
+
+    @Override
+    public boolean equals(Object compared) {
+        if (compared == null || getClass() != compared.getClass()) return false;
+
+        return Objects.equals(id, ((ItemResponseDto) compared).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }

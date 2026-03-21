@@ -1,7 +1,6 @@
-package com.main.wiki.model;
+package com.main.wiki.item.model;
 
 import com.main.common.util.Tier;
-import com.main.wiki.item.model.Item;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
