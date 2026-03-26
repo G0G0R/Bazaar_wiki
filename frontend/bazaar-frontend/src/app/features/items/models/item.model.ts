@@ -1,3 +1,5 @@
+import {Size} from './size.enum';
+
 export interface Item {
   id: string;
   name: string;
@@ -5,4 +7,5 @@ export interface Item {
   heroes: string[];
   tags: string[];
   hiddenTags: string[];
+  size: Size;
 }

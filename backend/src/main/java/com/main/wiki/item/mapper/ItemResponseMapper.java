@@ -19,7 +19,8 @@ public class ItemResponseMapper {
                 item.getTier(),
                 item.getHeroes(),
                 item.getTags(),
-                item.getHiddenTags()
+                item.getHiddenTags(),
+                item.getSize()
         );
     }
 }

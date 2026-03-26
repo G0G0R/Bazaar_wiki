@@ -3,6 +3,7 @@ package com.main.wiki.item.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Map;
 
 public class ItemJson {
 
@@ -12,6 +13,9 @@ public class ItemJson {
     @JsonProperty("StartingTier")
     private String startingTier;
 
+    @JsonProperty("Tiers")
+    private Map<String, TierJson> tiers;
+
     @JsonProperty("Localization")
     private LocalizationJson localization;
 
@@ -20,6 +24,8 @@ public class ItemJson {
     private List<String> tags;
 
     private List<String> hiddenTags;
+
+    private String size;
 
     public String getId() {
         return id;
@@ -67,5 +73,21 @@ public class ItemJson {
 
     public void setHiddenTags(List<String> hiddenTags) {
         this.hiddenTags = hiddenTags;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public Map<String, TierJson> getTiers() {
+        return tiers;
+    }
+
+    public void setTiers(Map<String, TierJson> tiers) {
+        this.tiers = tiers;
     }
 }

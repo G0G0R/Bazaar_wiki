@@ -1,5 +1,6 @@
 package com.main.wiki.item.dto;
 
+import com.main.common.util.Size;
 import com.main.common.util.Tier;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public class ItemResponseDto {
     private List<String> heroes;
     private List<String> tags;
     private List<String> hiddenTags;
+    private Size size;
 
     public ItemResponseDto() {}
 
@@ -22,7 +24,8 @@ public class ItemResponseDto {
             Tier tier,
             List<String> heroes,
             List<String> tags,
-            List<String> hiddenTags) {
+            List<String> hiddenTags,
+            Size size) {
 
         this.id = id;
         this.name = name;
@@ -30,6 +33,7 @@ public class ItemResponseDto {
         this.heroes = heroes;
         this.tags = tags;
         this.hiddenTags = hiddenTags;
+        this.size = size;
     }
 
     public String getId() { return id; }
@@ -38,6 +42,7 @@ public class ItemResponseDto {
     public List<String> getHeroes() { return heroes; }
     public List<String> getTags() { return tags; }
     public List<String> getHiddenTags() { return hiddenTags; }
+    public Size getSize() { return size; }
 
     public void setId(String id) { this.id = id; }
     public void setName(String name) { this.name = name; }
@@ -45,6 +50,7 @@ public class ItemResponseDto {
     public void setHeroes(List<String> heroes) { this.heroes = heroes; }
     public void setTags(List<String> tags) { this.tags = tags; }
     public void setHiddenTags(List<String> hiddenTags) { this.hiddenTags = hiddenTags; }
+    public void setSize(Size size) { this.size = size; }
 
     @Override
     public boolean equals(Object compared) {

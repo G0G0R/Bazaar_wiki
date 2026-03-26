@@ -1,0 +1,54 @@
+<div class="flex items-center gap-4 bg-gray-800 text-white rounded-xl p-3 relative shadow-md">
+
+  <!-- IMAGE -->
+  <div
+    class="relative shrink-0 rounded-md overflow-hidden"
+    [style.width.px]="getWidth()"
+    [style.height.px]="128"
+    style="height: 254px"
+  >
+    <img
+      [ngSrc]="getImageSrc()"
+      fill
+      alt="item icon"
+      class="object-fill"
+    />
+  </div>
+
+  <!-- CONTENU -->
+  <div class="flex flex-col flex-1">
+
+    <!-- NOM -->
+    <div class="font-semibold text-lg leading-tight">
+      {{ item.name }}
+    </div>
+
+    <!-- TAGS -->
+    <div class="flex flex-wrap gap-2 mt-2">
+
+      <!-- TIER -->
+      <span class="bg-gray-600 text-xs px-2 py-1 rounded">
+        {{ item.tier }}
+      </span>
+
+      <!-- TAGS -->
+      @for (tag of item.tags; track tag) {
+        <span class="bg-green-600 text-xs px-2 py-1 rounded">
+          {{ tag }}
+        </span>
+      }
+
+    </div>
+
+  </div>
+
+  <!-- HERO BADGES -->
+  <div class="absolute top-2 right-2 flex flex-col gap-1 items-end">
+    @for (hero of item.heroes; track hero) {
+      <span class="bg-blue-500 text-xs px-2 py-1 rounded">
+        {{ hero.substring(0, 3) }}
+      </span>
+    }
+  </div>
+
+</div>

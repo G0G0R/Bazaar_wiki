@@ -1,6 +1,7 @@
 package com.main.wiki.item.model;
 
 import jakarta.persistence.*;
+import com.main.common.util.Size;
 import com.main.common.util.Tier;
 
 import java.util.List;
@@ -10,6 +11,9 @@ public class Item {
 
     @Id
     private String id;
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    private List<Effect> effects;
 
     private String name;
 
@@ -25,11 +29,15 @@ public class Item {
 
     private List<String> hiddenTags;
 
+    @Enumerated(EnumType.STRING)
+    private Size size;
+
     public Item() {
     }
 
-    public Item(String id, String name, Tier tier, List<String> heroes, List<String> tags, List<String> hiddenTags) {
+    public Item(String id, List<Effect> effects, String name, Tier tier, List<String> heroes, List<String> tags, List<String> hiddenTags) {
         this.id = id;
+        this.effects = effects;
         this.name = name;
         this.tier = tier;
         this.heroes = heroes;
@@ -85,5 +93,19 @@ public class Item {
         this.hiddenTags = hiddenTags;
     }
 
+    public Size getSize() {
+        return size;
+    }
 
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
+    public List<Effect> getEffects() {
+        return effects;
+    }
+
+    public void setEffects(List<Effect> effects) {
+        this.effects = effects;
+    }
 }

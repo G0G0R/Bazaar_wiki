@@ -4,32 +4,40 @@ import { FormsModule } from '@angular/forms';
 
 import { ItemService } from '../../../../core/services/item.service';
 import { Item } from '../../models/item.model';
+import {ItemCardComponent} from '../item-card/item-card.component';
 
 @Component({
   selector: 'app-item-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ItemCardComponent],
   templateUrl: './item-list.component.html',
   styleUrls: ['./item-list.component.css']
 })
 export class ItemListComponent implements OnInit {
 
   items: Item[] = [];
+  displayedItems: Item[] = []; // ✅ nouvelle liste pour affichage
   searchTerm: string = '';
 
   constructor(private readonly itemService: ItemService) {}
 
   ngOnInit(): void {
     this.itemService.getItems().subscribe({
-      next: (data: Item[]) => this.items = data,
-      error: (err) => console.error(err)
+      next: (data: Item[]) => {
+        this.items = data;
+        this.displayedItems = data; // ✅ affichage direct
+      },
+      error: (err: any) => console.error(err)
     });
   }
 
-  filteredItems(): Item[] {
-    if (!this.searchTerm) return this.items;
+  updateFilter(): void {
+    if (!this.searchTerm) {
+      this.displayedItems = this.items;
+      return;
+    }
 
-    return this.items.filter(item =>
+    this.displayedItems = this.items.filter(item =>
       item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
