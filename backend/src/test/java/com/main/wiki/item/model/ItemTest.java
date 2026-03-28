@@ -3,6 +3,7 @@ package com.main.wiki.item.model;
 import com.main.common.util.Tier;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,7 +16,7 @@ class ItemTest {
         List<String> tags = List.of("Economy");
         List<String> hiddenTags = List.of("Hidden");
 
-        Item item = new Item("item-1", "Test item", Tier.GOLD, heroes, tags, hiddenTags);
+        Item item = new Item("item-1",new ArrayList<>(),"Test item", Tier.GOLD, heroes, tags, hiddenTags);
 
         assertThat(item.getId()).isEqualTo("item-1");
         assertThat(item.getName()).isEqualTo("Test item");

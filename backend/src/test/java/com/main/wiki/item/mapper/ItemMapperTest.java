@@ -24,7 +24,7 @@ class ItemMapperTest {
                         .withHiddenTags("Crit")
                         .build();
 
-        Item item = mapper.toEntity(dto);
+        Item item = mapper.dtoToItem(dto);
 
         assertThat(item).isNotNull();
         assertThat(item.getId()).isEqualTo("item1");
@@ -38,7 +38,7 @@ class ItemMapperTest {
     @Test
     void shouldReturnNullWhenDtoIsNull() {
 
-        Item item = mapper.toEntity(null);
+        Item item = mapper.dtoToItem(null);
 
         assertThat(item).isNull();
     }
@@ -48,7 +48,7 @@ class ItemMapperTest {
 
         ItemJson dto = new ItemJson();
 
-        Item item = mapper.toEntity(dto);
+        Item item = mapper.dtoToItem(dto);
 
         assertThat(item).isNull();
     }

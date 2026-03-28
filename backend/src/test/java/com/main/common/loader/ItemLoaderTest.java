@@ -20,7 +20,7 @@ class ItemLoaderTest {
     @Test
     void shouldLoadItemsAndIgnoreItemsWithMultipleHeroes() throws Exception {
 
-        /*GameDataLoader gameDataLoader = mock(GameDataLoader.class);
+        GameDataLoader gameDataLoader = mock(GameDataLoader.class);
         ObjectMapper objectMapper = mock(ObjectMapper.class);
         ItemMapper itemMapper = mock(ItemMapper.class);
         ItemRepository itemRepository = mock(ItemRepository.class);
@@ -31,8 +31,7 @@ class ItemLoaderTest {
         JsonNode node1 = mock(JsonNode.class);
         JsonNode node2 = mock(JsonNode.class);
 
-        when(gameDataLoader.getObjectsByType("Item"))
-                .thenReturn(List.of(node1, node2));
+        when(gameDataLoader.getObjectsByType("Item")).thenReturn(List.of(node1, node2));
 
         ItemJson dto1 = new ItemJson();
         dto1.setHeroes(List.of("Vanessa"));
@@ -46,10 +45,10 @@ class ItemLoaderTest {
         Item mappedItem = new Item();
         when(itemMapper.dtoToItem(dto1)).thenReturn(mappedItem);
         List<Effect> mappedEffect = new ArrayList<>();
-        when(itemMapper.dtoToEffect(dto1)).thenReturn(mappedEffect);
+        when(itemMapper.dtoToEffect(dto1, mappedItem)).thenReturn(mappedEffect);
 
         loader.run();
 
-        verify(itemRepository).saveAll(List.of(mappedItem));*/
+        verify(itemRepository).saveAll(List.of(mappedItem));
     }
 }

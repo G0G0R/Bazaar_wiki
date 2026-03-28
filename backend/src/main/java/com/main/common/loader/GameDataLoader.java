@@ -7,8 +7,6 @@ import java.io.InputStream;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.main.common.util.Constants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -17,8 +15,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GameDataLoader {
-
-    private static final Logger log = LoggerFactory.getLogger(GameDataLoader.class);
 
     private final ObjectMapper objectMapper;
 
@@ -57,9 +53,6 @@ public class GameDataLoader {
             }
         }
 
-        objectsByType.forEach((type, list) ->
-                log.info("Loaded {} objects of type {}", list.size(), type)
-        );
     }
 
     public List<JsonNode> getObjectsByType(String type) {
