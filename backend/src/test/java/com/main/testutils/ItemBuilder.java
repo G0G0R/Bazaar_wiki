@@ -18,13 +18,13 @@ public class ItemBuilder {
 
         listHero.add(HeroName.DOOLEY.name());
 
-        res.add(new ItemResponseDto("1", "itemDTO 1", Tier.BRONZE, listHero, new ArrayList<>(), new ArrayList<>(), Size.LARGE));
+        res.add(new ItemResponseDto("1", "itemDTO 1", Tier.BRONZE, listHero, new ArrayList<>(), new ArrayList<>(), Size.LARGE, new ArrayList<>()));
 
         listHero.clear();
         listHero.add(HeroName.VANESSA.name());
 
-        res.add(new ItemResponseDto("2", "itemDTO 2", Tier.SILVER, listHero, new ArrayList<>(), new ArrayList<>(), Size.SMALL));
-        res.add(new ItemResponseDto("3", "itemDTO 3", Tier.DIAMOND, listHero, new ArrayList<>(), new ArrayList<>(), Size.MEDIUM));
+        res.add(new ItemResponseDto("2", "itemDTO 2", Tier.SILVER, listHero, new ArrayList<>(), new ArrayList<>(), Size.SMALL, new ArrayList<>()));
+        res.add(new ItemResponseDto("3", "itemDTO 3", Tier.DIAMOND, listHero, new ArrayList<>(), new ArrayList<>(), Size.MEDIUM, new ArrayList<>()));
 
         return res;
     }
@@ -61,7 +61,7 @@ public class ItemBuilder {
 
         listHero.add(HeroName.DOOLEY.name());
 
-        return new ItemResponseDto("1", "item 1", Tier.BRONZE, listHero, new ArrayList<>(), new ArrayList<>(), Size.MEDIUM);
+        return new ItemResponseDto("1", "item 1", Tier.BRONZE, listHero, new ArrayList<>(), new ArrayList<>(), Size.MEDIUM, new ArrayList<>());
 
     }
 

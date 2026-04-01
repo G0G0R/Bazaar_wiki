@@ -1,6 +1,8 @@
 package com.main.wiki.item.mapper;
 
+import com.main.wiki.item.dto.EffectResponseDto;
 import com.main.wiki.item.dto.ItemResponseDto;
+import com.main.wiki.item.model.Effect;
 import com.main.wiki.item.model.Item;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +22,19 @@ public class ItemResponseMapper {
                 item.getHeroes(),
                 item.getTags(),
                 item.getHiddenTags(),
-                item.getSize()
+                item.getSize(),
+                item.getEffects()
+                        .stream()
+                        .map(this::toEffectDto)
+                        .toList()
+        );
+    }
+
+    private EffectResponseDto toEffectDto(Effect effect) {
+        return new EffectResponseDto(
+                effect.getEffectType(),
+                effect.getCooldowns(),
+                effect.getText()
         );
     }
 }

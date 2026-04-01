@@ -1,11 +1,19 @@
-import {Size} from './size.enum';
+import { Size } from './size.enum';
+import { Tier } from './tier.enum';
+
+export interface Effect {
+  effectType: 'ACTIVE' | 'PASSIVE';
+  cooldowns: number[];
+  text: string;
+}
 
 export interface Item {
   id: string;
   name: string;
-  tier: string;
+  tier: Tier;
+  size: Size;
   heroes: string[];
   tags: string[];
   hiddenTags: string[];
-  size: Size;
+  effects: Effect[];
 }

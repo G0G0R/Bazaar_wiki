@@ -1,54 +1,87 @@
-<div class="flex items-center gap-4 bg-gray-800 text-white rounded-xl p-3 relative shadow-md">
-
-  <!-- IMAGE -->
-  <div
-    class="relative shrink-0 rounded-md overflow-hidden"
-    [style.width.px]="getWidth()"
-    [style.height.px]="128"
-    style="height: 254px"
-  >
-    <img
-      [ngSrc]="getImageSrc()"
-      fill
-      alt="item icon"
-      class="object-fill"
-    />
-  </div>
-
-  <!-- CONTENU -->
-  <div class="flex flex-col flex-1">
-
-    <!-- NOM -->
-    <div class="font-semibold text-lg leading-tight">
-      {{ item.name }}
-    </div>
-
-    <!-- TAGS -->
-    <div class="flex flex-wrap gap-2 mt-2">
-
-      <!-- TIER -->
-      <span class="bg-gray-600 text-xs px-2 py-1 rounded">
-        {{ item.tier }}
-      </span>
-
-      <!-- TAGS -->
-      @for (tag of item.tags; track tag) {
-        <span class="bg-green-600 text-xs px-2 py-1 rounded">
-          {{ tag }}
-        </span>
-      }
-
-    </div>
-
-  </div>
+<div class="bg-gray-800 text-white rounded-xl p-3 relative shadow-md flex flex-col gap-3 h-full">
 
   <!-- HERO BADGES -->
-  <div class="absolute top-2 right-2 flex flex-col gap-1 items-end">
-    @for (hero of item.heroes; track hero) {
-      <span class="bg-blue-500 text-xs px-2 py-1 rounded">
+  <div class="absolute top-2 right-2 flex flex-col gap-1 items-end z-10">
+    @for (hero of item.heroes; track $index) {
+    <span class="bg-blue-500 text-xs px-2 py-1 rounded">
         {{ hero.substring(0, 3) }}
       </span>
     }
   </div>
+
+  <!-- HEADER : image à gauche + infos à droite -->
+  <div class="flex gap-4 pr-12">
+
+    <!-- IMAGE -->
+    <div
+      class="relative shrink-0 rounded-md overflow-hidden"
+      [style.width.px]="getWidth()"
+      [style.height.px]="128"
+    >
+      <img
+        [ngSrc]="getImageSrc()"
+        fill
+        alt="item icon"
+        class="object-fill"
+      />
+    </div>
+
+    <!-- TITRE + TAGS -->
+    <div class="flex flex-col min-w-0 flex-1">
+
+      <!-- NOM -->
+      <div class="font-semibold text-lg leading-tight break-words">
+        {{ item.name }}
+      </div>
+
+      <!-- TAGS -->
+      <div class="flex flex-wrap gap-2 mt-3">
+
+        <span class="bg-gray-600 text-xs px-2 py-1 rounded">
+          {{ item.tier }}
+        </span>
+
+        @for (tag of item.tags; track $index) {
+        <span class="bg-green-600 text-xs px-2 py-1 rounded">
+            {{ tag }}
+          </span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- EFFECTS : pleine largeur sous le header -->
+  @if (item.effects?.length) {
+  <div class="flex flex-col gap-2">
+
+    @for (effect of item.effects; track $index) {
+    <div class="rounded-md bg-gray-700/70 p-2 text-sm">
+
+      <!-- TYPE + COOLDOWN -->
+      <div class="flex items-center gap-2 mb-1">
+            <span
+              class="text-[10px] font-bold px-2 py-0.5 rounded uppercase"
+              [class.bg-orange-600]="effect.effectType === 'ACTIVE'"
+              [class.bg-blue-600]="effect.effectType === 'PASSIVE'"
+            >
+              {{ effect.effectType }}
+            </span>
+
+        @if (effect.effectType === 'ACTIVE' && effect.cooldowns?.length) {
+        <span class="text-xs text-gray-300">
+                CD: {{ effect.cooldowns.join(' / ') }}
+              </span>
+        }
+      </div>
+
+      <!-- TEXTE -->
+      <div class="text-gray-100 leading-snug whitespace-pre-line">
+        {{ effect.text }}
+      </div>
+    </div>
+    }
+
+  </div>
+  }
 
 </div>
