@@ -1,9 +1,9 @@
 package com.main.wiki.item.service;
 
+import com.main.common.util.Size;
 import com.main.common.util.Tier;
 import com.main.wiki.item.dto.ItemResponseDto;
 import com.main.wiki.item.mapper.ItemResponseMapper;
-import com.main.wiki.item.model.Item;
 import com.main.wiki.item.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
@@ -35,24 +35,30 @@ public class ItemService {
                         new RuntimeException("Item not found: " + id));
     }
 
-    public List<ItemResponseDto> getItems(Tier tier, String hero) {
+    public List<ItemResponseDto> getItemByTier(Tier tier) {
+        return itemRepository.findByTier(tier).
+                stream()
+                .map(mapper::toDto)
+                .toList();
+    }
 
-        List<Item> items;
+    public List<ItemResponseDto> getItemByHero(String hero) {
+        return itemRepository.findByHero(hero)
+                .stream()
+                .map(mapper::toDto)
+                .toList();
+    }
 
-        if (tier != null && hero != null) {
-            items = itemRepository.findByTierAndHero(tier, hero);
+    public List<ItemResponseDto> getItemBySize(Size size) {
+        return itemRepository.findBySize(size)
+                .stream()
+                .map(mapper::toDto)
+                .toList();
+    }
 
-        } else if (tier != null) {
-            items = itemRepository.findByTier(tier);
-
-        } else if (hero != null) {
-            items = itemRepository.findByHero(hero);
-
-        } else {
-            items = itemRepository.findAll();
-        }
-
-        return items.stream()
+    public List<ItemResponseDto> getItemByTags(List<String> tags) {
+        return itemRepository.findByTags(tags)
+                .stream()
                 .map(mapper::toDto)
                 .toList();
     }

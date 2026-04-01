@@ -25,8 +25,14 @@ public class Item {
     @Column(name = "hero")
     private List<String> heroes;
 
+    @ElementCollection
+    @CollectionTable(name = "item_tags", joinColumns = @JoinColumn(name = "item_id"))
+    @Column(name = "tag")
     private List<String> tags;
 
+    @ElementCollection
+    @CollectionTable(name = "item_hidden_tags", joinColumns = @JoinColumn(name = "item_id"))
+    @Column(name = "hidden_tag")
     private List<String> hiddenTags;
 
     @Enumerated(EnumType.STRING)

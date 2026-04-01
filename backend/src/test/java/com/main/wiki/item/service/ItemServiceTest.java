@@ -19,13 +19,12 @@ import static org.mockito.Mockito.*;
 class ItemServiceTest {
 
     private ItemRepository itemRepository;
-    private ItemResponseMapper mapper;
     private ItemService itemService;
 
     @BeforeEach
     void setUp() {
         itemRepository = mock(ItemRepository.class);
-        mapper = new ItemResponseMapper();
+        ItemResponseMapper mapper = new ItemResponseMapper();
         itemService = new ItemService(itemRepository, mapper);
     }
 
@@ -49,16 +48,20 @@ class ItemServiceTest {
     // =========================
     @Test
     void shouldReturnItemById() {
-        Item item = ItemBuilder.getItem();
+        Item item = ItemBuilder.getListItem().getFirst();
+        ItemResponseDto expected = ItemBuilder.getListItemsDTO().getFirst();
 
-        when(itemRepository.findById(anyString())).thenReturn(Optional.of(item));
+        when(itemRepository.findById("1")).thenReturn(Optional.of(item));
 
-        ItemResponseDto result = itemService.getItemById(item.getId());
+        ItemResponseDto result = itemService.getItemById("1");
 
-        verify(itemRepository).findById(item.getId());
-        assertThat(result).isEqualTo(mapper.toDto(item));
+        verify(itemRepository).findById("1");
+        assertThat(result).isEqualTo(expected);
     }
 
+    // =========================
+    // get item by id should return runtime exception when no item found
+    // =========================
     @Test
     void shouldThrowWhenItemNotFound() {
         when(itemRepository.findById("999")).thenReturn(Optional.empty());
@@ -67,53 +70,55 @@ class ItemServiceTest {
     }
 
     // =========================
-    // getItems (filters)
+    // get items by tier
     // =========================
     @Test
-    void shouldReturnAllItemsWhenNoFilters() {
-        List<ItemResponseDto> expected = ItemBuilder.getListItemsDTO();
-
-        when(itemRepository.findAll()).thenReturn(ItemBuilder.getListItem());
-
-        List<ItemResponseDto> result = itemService.getItems(null, null);
-
-        verify(itemRepository).findAll();
-        assertThat(result).isEqualTo(expected);
-    }
-
-    @Test
     void shouldFilterByTier() {
-        List<ItemResponseDto> expected = ItemBuilder.getListItemsDTO();
+        List<Item> items = List.of(ItemBuilder.getListItem().getFirst());
+        List<ItemResponseDto> expected = List.of(ItemBuilder.getListItemsDTO().getFirst());
 
-        when(itemRepository.findByTier(Tier.BRONZE)).thenReturn(ItemBuilder.getListItem());
+        when(itemRepository.findByTier(Tier.BRONZE)).thenReturn(items);
 
-        List<ItemResponseDto> result = itemService.getItems(Tier.BRONZE, null);
+        List<ItemResponseDto> result = itemService.getItemByTier(Tier.BRONZE);
 
         verify(itemRepository).findByTier(Tier.BRONZE);
         assertThat(result).isEqualTo(expected);
     }
 
+    // =========================
+    // get items by hero
+    // =========================
     @Test
     void shouldFilterByHero() {
-        List<ItemResponseDto> expected = ItemBuilder.getListItemsDTO();
+        List<Item> items = List.of(ItemBuilder.getListItem().get(1), ItemBuilder.getListItem().get(2));
+        List<ItemResponseDto> expected = List.of(
+                ItemBuilder.getListItemsDTO().get(1),
+                ItemBuilder.getListItemsDTO().get(2)
+        );
 
-        when(itemRepository.findByHero(HeroName.VANESSA.name())).thenReturn(ItemBuilder.getListItem());
+        when(itemRepository.findByHero(HeroName.VANESSA.name())).thenReturn(items);
 
-        List<ItemResponseDto> result = itemService.getItems(null, HeroName.VANESSA.name());
+        List<ItemResponseDto> result = itemService.getItemByHero(HeroName.VANESSA.name());
 
         verify(itemRepository).findByHero(HeroName.VANESSA.name());
         assertThat(result).isEqualTo(expected);
     }
 
+    // =========================
+    // get items by tags
+    // =========================
     @Test
-    void shouldFilterByTierAndHero() {
-        List<ItemResponseDto> expected = ItemBuilder.getListItemsDTO();
+    void shouldFilterByTags() {
+        List<String> tags = List.of("Burn", "Weapon");
 
-        when(itemRepository.findByTierAndHero(Tier.BRONZE, HeroName.VANESSA.name())).thenReturn(ItemBuilder.getListItem());
+        List<Item> items = List.of(ItemBuilder.getListItem().get(1));
+        List<ItemResponseDto> expected = List.of(ItemBuilder.getListItemsDTO().get(1));
 
-        List<ItemResponseDto> result = itemService.getItems(Tier.BRONZE, HeroName.VANESSA.name());
+        when(itemRepository.findByTags(tags)).thenReturn(items);
 
-        verify(itemRepository).findByTierAndHero(Tier.BRONZE, HeroName.VANESSA.name());
+        List<ItemResponseDto> result = itemService.getItemByTags(tags);
+
+        verify(itemRepository).findByTags(tags);
         assertThat(result).isEqualTo(expected);
     }
 }
